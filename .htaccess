@@ -1,0 +1,4 @@
+RewriteEngine on
+
+RewriteCond %{REQUEST_URI} !\.(php|css|js|html)$
+RewriteRule ^(.*) /default.php

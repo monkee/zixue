@@ -1,4 +1,4 @@
 RewriteEngine on
 
-RewriteCond %{REQUEST_URI} !\.(php|css|js|html)$
+RewriteCond %{REQUEST_URI} !\.(php|css|js|html|jpg|png|gif)$
 RewriteRule ^(.*) /default.php

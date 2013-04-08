@@ -1,12 +1,12 @@
 <?php
 /**
- * Õû¸ö¿ò¼ÜµÄºËĞÄÎÄ¼ş
+ * æ•´ä¸ªæ¡†æ¶çš„æ ¸å¿ƒæ–‡ä»¶
  * 
- * ´¦ÀíÈçÏÂÄÚÈİ
- * 1. »·¾³³õÊ¼»¯£¨³£Á¿¡¢ÅäÖÃ¡¢autoload£©
- * 2. ÊäÈë½âÎö£¨Â·ÓÉ£©
- * 3. µ÷ÓÃÖ´ĞĞ¹æÔò
- * 4. Êä³ö½âÎö£¨json¡¢html¡¢ÎÄ¼ş¡¢smarty£©
+ * å¤„ç†å¦‚ä¸‹å†…å®¹
+ * 1. ç¯å¢ƒåˆå§‹åŒ–ï¼ˆå¸¸é‡ã€é…ç½®ã€autoloadï¼‰
+ * 2. è¾“å…¥è§£æï¼ˆè·¯ç”±ï¼‰
+ * 3. è°ƒç”¨æ‰§è¡Œè§„åˆ™
+ * 4. è¾“å‡ºè§£æï¼ˆjsonã€htmlã€æ–‡ä»¶ã€smartyï¼‰
  * 
  * @package zixue
  * @category Core
@@ -17,7 +17,7 @@
 class Core_Zixue
 {
 	/**
-	 * ¶ÔÏóµÄÊµÀı»¯²¿·Ö£¬´æ´¢µ½ÕâÀï
+	 * å¯¹è±¡çš„å®ä¾‹åŒ–éƒ¨åˆ†ï¼Œå­˜å‚¨åˆ°è¿™é‡Œ
 	 * 
 	 * @var Zixue
 	 */
@@ -29,9 +29,9 @@ class Core_Zixue
 	 */
 	
 	/**
-	 * »ñÈ¡ZixueµÄÊµÀı»¯¶ÔÏó
+	 * è·å–Zixueçš„å®ä¾‹åŒ–å¯¹è±¡
 	 * 
-	 * µäĞÍµÄµ¥ÀıÄ£Ê½µÄĞ´·¨
+	 * å…¸å‹çš„å•ä¾‹æ¨¡å¼çš„å†™æ³•
 	 * 
 	 * @return Zixue
 	 */
@@ -43,9 +43,9 @@ class Core_Zixue
 	}
 	
 	/**
-	 * Ê¹ÓÃ¸øautoloadÔØÈëµÄ·½·¨
+	 * ä½¿ç”¨ç»™autoloadè½½å…¥çš„æ–¹æ³•
 	 * 
-	 * @param string $class ÀàÃû
+	 * @param string $class ç±»å
 	 */
 	static public function autoload($class){
 		$classpath = str_replace('_', DS, $class);
@@ -56,13 +56,13 @@ class Core_Zixue
 	}
 	
 	/**
-	 * Ö´ĞĞhttpÇëÇó
+	 * æ‰§è¡Œhttpè¯·æ±‚
 	 * 
-	 * ¸ÃÇëÇó»á×Ô¼º×éÖ¯Êä³ö£¬²¢exit(0)
+	 * è¯¥è¯·æ±‚ä¼šè‡ªå·±ç»„ç»‡è¾“å‡ºï¼Œå¹¶exit(0)
 	 */
 	public function httpRequest(){
-		$config = new Core_Config();
-		$config->test();
+		$httpRequest = Core_Request::instance();
+		$httpRequest->exec();
 	}
 	
 	/********************************************
@@ -70,8 +70,8 @@ class Core_Zixue
 	 * ******************************************
 	 */
 	private function __construct(){
-		$this->initAutoload(); //³õÊ¼»¯×Ô¶¯ÔØÈë
-		$this->initConfig(); //ÅäÖÃ³õÊ¼»¯
+		$this->initAutoload(); //åˆå§‹åŒ–è‡ªåŠ¨è½½å…¥
+		$this->initConfig(); //é…ç½®åˆå§‹åŒ–
 	}
 	
 	private function initAutoload(){

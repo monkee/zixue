@@ -14,7 +14,7 @@
  */
 class Core_Router
 {
-	private $action = 'Action_Index';
+	private $action = 'Index';
 	private $method = 'index';
 	
 	static private $router = null;
@@ -26,13 +26,17 @@ class Core_Router
 		return self::$router;
 	}
 	
+	public function getPureAction(){
+		return $this->action;
+	}
+	
 	/**
 	 * 获取解析后的类
 	 * 
 	 * @return string
 	 */
 	public function getAction(){
-		return $this->action;
+		return "Action_" . $this->action;
 	}
 	
 	/**
@@ -55,7 +59,7 @@ class Core_Router
 	private function init(){
 		$url = $_SERVER['REQUEST_URI'];
 		if(preg_match("/^\/([a-z0-9\_\/]+)?(\-[a-z0-9\_]+)?/", $url, $m)){
-			empty($m[1]) || $this->initClass($m[1]);
+			empty($m[1]) || $this->initAction($m[1]);
 			empty($m[2]) || $this->initMethod($m[2]);
 		}
 	}
@@ -67,7 +71,7 @@ class Core_Router
 	 * 
 	 * @param string $class 格式为：a/b/c/d 末尾没有/
 	 */
-	private function initClass($class){
+	private function initAction($class){
 		if(empty($class)){
 			return;
 		}
@@ -75,7 +79,7 @@ class Core_Router
 		foreach($prefixs as &$prefix){
 			$prefix = ucfirst($prefix);
 		}
-		$this->action = "Action_" . implode('_', $prefixs);
+		$this->action = implode('_', $prefixs);
 	}
 	
 	/**

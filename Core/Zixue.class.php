@@ -55,6 +55,16 @@ class Core_Zixue
 		}
 	}
 	
+	static public function exception($e){
+		$isDev = Core_Config::get('global/site/isDev');
+		if($isDev){
+			echo $e->getMessage();
+		}else{
+			header("HTTP/1.0 404 Not Found");
+		}
+		exit;
+	}
+	
 	/**
 	 * 执行http请求
 	 * 
@@ -71,14 +81,19 @@ class Core_Zixue
 	 */
 	private function __construct(){
 		$this->initAutoload(); //初始化自动载入
+		$this->initException(); //初始化异常处理请求
 		$this->initConfig(); //配置初始化
 	}
 	
 	private function initAutoload(){
-		spl_autoload_register(array(Core_Zixue, autoload));
+		spl_autoload_register(array("Core_Zixue", "autoload"));
 	}
 	
 	private function initConfig(){
 		
+	}
+	
+	private function initException(){
+		set_exception_handler(array("Core_Zixue", "exception"));
 	}
 }

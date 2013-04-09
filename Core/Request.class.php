@@ -21,15 +21,59 @@ class Core_Request
 	private $system = array(
 		'type' => 'html', //可选为：ajax|html
 	);
+	private $isError = false;
+	private $tpl = "";
 	
 	private $output = array(); //输出数据
 	
 	public function exec(){
-		//1. 获取路由
-		//2. 执行请求
-		//3. 处理异常
-		//4. 整理输出
-		//5. 终止进程
+		$this->execAction();
+		$this->execOutput();
+		$this->execEnd();
+	}
+	
+	private function execAction(){
+		$router = Core_Router::instance();
+		$action = $router->getAction();
+		$method = $router->getMethod();
+		if(!class_exists($action)){
+			throw new Core_Exception_Fatal("Action {$action} is not exist!");
+		}
+		$actionObject = new $action();
+		if(!method_exists($actionObject, $method)){
+			throw new Core_Exception_Fatal("Action {$action} does not has method {$method}!");
+		}
+		
+		try{
+			$this->data = $actionObject->$method();
+			$dir = $router->getPureAction();
+			$this->tpl = "{$dir}/{$method}";
+			$this->isError = false;
+		}catch(Core_Exception_Message $e){
+			$this->isError = true;
+			$this->tpl = "message";
+			$this->data = $e->asArray();
+		}
+	}
+	
+	private function execOutput(){
+		if('html' == $this->system['type']){
+			$smarty = new Lib_Smarty();
+			$tpl = ZIXUE . Core_Config::get('global/smarty/template');
+			$smarty->setTemplateDir($tpl);
+			$tpl = ZIXUE . Core_Config::get('global/smarty/compile');
+			$smarty->setCompileDir($tpl);
+			$smarty->setCacheDir($tpl);
+			$smarty->assign($this->data);
+			$smarty->display($this->tpl . '.tpl');
+		}elseif('json' == $this->system['type']){
+			header("Content-Type:application/json;");
+			echo json_encode($this->data);
+		}
+	}
+	
+	private function execEnd(){
+		exit(0);
 	}
 	/********************************************
 	 * STATIC METHOD & PROTOTYPE

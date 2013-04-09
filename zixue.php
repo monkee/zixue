@@ -1,9 +1,9 @@
 <?php
 /**
- * Èë¿ÚÎÄ¼þ£¬¾Í¸ÉÒ»¼þÊÂ£º
+ * å…¥å£æ–‡ä»¶ï¼Œå°±å¹²ä¸€ä»¶äº‹ï¼š
  * 
  * 1. autoloader
- * 2. ¶¨Òå»·¾³»ù±¾³£Á¿
+ * 2. å®šä¹‰çŽ¯å¢ƒåŸºæœ¬å¸¸é‡
  * 
  * @package zixue
  * @category Core
@@ -11,9 +11,10 @@
  * @copyright 2013-2014@zixue.it
  */
 
-//1. ¶¨Òå»·¾³±äÁ¿
-define('DS', DIRECTORY_SEPARATOR);	//Â·¾¶·Ö¸ô·û
-define('ZIXUE', dirname(__FILE__) . DS); //¸ùÄ¿Â¼
+//1. å®šä¹‰çŽ¯å¢ƒå˜é‡
+define('DS', DIRECTORY_SEPARATOR);	//è·¯å¾„åˆ†éš”ç¬¦
+define('ZIXUE', dirname(__FILE__) . DS); //æ ¹ç›®å½•
+define('ZIXUE_CONF', ZIXUE . 'conf' . DS); //é…ç½®ç›®å½•
 
-//2. ÒýÈëºËÐÄÎÄ¼þ
+//2. å¼•å…¥æ ¸å¿ƒæ–‡ä»¶
 include ZIXUE . 'Core' . DS . 'Zixue.class.php';
